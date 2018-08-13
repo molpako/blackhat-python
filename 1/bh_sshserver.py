@@ -14,7 +14,7 @@ class Server(paramiko.ServerInterface):
             return paramiko.OPEN_SUCCEEDED
         return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
     
-    def check_auth_passwd(self, username, password):
+    def check_auth_password(self, username, password):
         if username == 'root' and password == 'screencast':
             return paramiko.AUTH_SUCCESSFUL
         return paramiko.AUTH_FAILED
@@ -46,17 +46,20 @@ def main():
 
         except paramiko.SSHException as e:
             print('[-] SSH negotiation failed.')
-        
+ 
         chan = bhSession.accept(20)
+        if not chan:
+            print('[!] no channel is opened before the given timeout')
+            
         print('[+] Authenticated!')
         print(chan.recv(1024))
         chan.send(b'Welcome to bh_ssh')
 
         while True:
             try:
-                command = input("Enter command: ".strip('\n'))
+                command = input("Enter command: ").strip('\n')
                 if command != 'exit':
-                    chan.send(command)
+                    chan.send(command.encode())
                     print(chan.recv(1024) + '\n')
                 else:
                     chan.send('exit')

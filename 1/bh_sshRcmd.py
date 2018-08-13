@@ -28,9 +28,9 @@ def ssh_command(ip, port, user, passwd, command):
         client.close()
     return
 
-    
+
 def main():
-    ssh_command('127.0.0.1', '32768', 'root', 'screencast', 'ClientConnected')
+    ssh_command('172.17.0.2', 9999, 'root', 'screencast', 'ClientConnected')
 
 if __name__ == '__main__':
     main()

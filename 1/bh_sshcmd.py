@@ -18,7 +18,7 @@ def ssh_command(ip, port, user, passwd, command):
     return
 
 def main():
-    ssh_command('127.0.0.1', '32768', 'root', 'screencast', 'pwd')
+    ssh_command('172.17.0.2', '9999', 'root', 'screencast', 'pwd')
 
 if __name__ == '__main__':
     main()
